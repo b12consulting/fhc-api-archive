@@ -48,6 +48,7 @@ headers: Array<Header> | string;
     export function sendCommand(method: string, url: string, headers: Array<Header> | null, data: string | any = ""): Promise<Data> {
         return new Promise<Data>(function (resolve, reject) {
             var jsXHR = new XMLHttpRequest();
+
             jsXHR.open(method, url);
 
             jsXHR.onload = (ev) => {
@@ -59,6 +60,12 @@ headers: Array<Header> | string;
             jsXHR.onerror = (ev) => {
                 reject('Error ' + method.toUpperCase() + 'ing data to url "');
             };
+
+            if(headers && headers.length){
+                headers.forEach(header => {
+                    jsXHR.setRequestHeader(header.header, header.data);
+                });
+            }
 
             if (method === 'POST' || method === 'PUT') {
                 jsXHR.send(data);
