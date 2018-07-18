@@ -10,7 +10,7 @@ export class FHCGensisApi {
   }
 
   handleError(e: XHR.Data) {
-    if (e.status == 401) throw Error('auth-failed');
+    if (e.status === 401) throw Error('auth-failed');
     else throw Error('api-error' + e.status);
   }
 
@@ -34,6 +34,36 @@ export class FHCGensisApi {
       (tokenId ? '&tokenId=' + tokenId : '') +
       (keystoreId ? '&keystoreId=' + keystoreId : '') +
       (passPhrase ? '&passPhrase=' + encodeURIComponent(passPhrase) : '') +
+      (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
+      (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
+      (hcpName ? '&hcpName=' + hcpName : '') +
+      (hcpQuality ? '&hcpQuality=' + hcpQuality : '') +
+      (date ? '&date=' + date : '') +
+      (hospitalized ? '&hospitalized=' + hospitalized : '');
+    return XHR.sendCommand('GET', _url, this.headers).catch(err => this.handleError(err));
+  }
+
+  getGeneralInsurabilityByMembershipUsingGET(
+    io,
+    ioMembership,
+    tokenId,
+    keystoreId,
+    passPhrase,
+    hcpNihii,
+    hcpSsin,
+    hcpName,
+    hcpQuality?,
+    date?,
+    hospitalized?
+  ) {
+    const _url =
+      this.host +
+      `/genins/${io}/${ioMembership}` +
+      '?ts=' +
+      new Date().getTime() +
+      (tokenId ? '&tokenId=' + tokenId : '') +
+      (keystoreId ? '&keystoreId=' + keystoreId : '') +
+      (passPhrase ? '&passPhrase=' + passPhrase : '') +
       (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
       (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
       (hcpName ? '&hcpName=' + hcpName : '') +
