@@ -80,6 +80,7 @@ export class FHCDmgApi {
       (patientSsin ? '&patientSsin=' + patientSsin : '') +
       (oa ? '&oa=' + oa : '') +
       (regNrWithMut ? '&regNrWithMut=' + regNrWithMut : '') +
+      (nomenclature ? '&nomenclature=' + nomenclature : '') +
       (patientFirstName ? '&patientFirstName=' + patientFirstName : '') +
       (patientLastName ? '&patientLastName=' + patientLastName : '') +
       (patientGender ? '&patientGender=' + patientGender : '') +
