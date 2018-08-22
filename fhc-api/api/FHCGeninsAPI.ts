@@ -1,6 +1,6 @@
 import { XHR } from './XHR';
 
-export class FHCGensisApi {
+export class FHCGeninsApi {
   host: string;
   headers: Array<XHR.Header>;
 
