@@ -9,7 +9,7 @@ export class FHCConsentApi {
         this.headers = headers; //Object.keys(headers).map(k => new XHR.Header(k, headers[k]));
     }
 
-    handleError(e: XHR.Data) {
+    handleError(e: XHR.Data): never {
         if (e.status === 401) throw Error('auth-failed');
         else throw Error('api-error' + e.status);
     }

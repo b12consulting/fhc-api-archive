@@ -9,7 +9,7 @@ export class FHCTerlinkApi {
         this.headers = headers;
     }
 
-    handleError(e: XHR.Data) {
+    handleError(e: XHR.Data): never {
         if (e.status === 401) throw Error('auth-failed');
         else throw Error('api-error' + e.status);
     }
