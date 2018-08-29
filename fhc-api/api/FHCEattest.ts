@@ -66,7 +66,7 @@ export interface EattestResult {
   acknowledge: EattestAcknowledgeType;
   attest: Eattest;
   invoicingNumber: string;
-  kmerhMessage: string;
+  kmehrMessage: string;
   xades: string;
 }
 
