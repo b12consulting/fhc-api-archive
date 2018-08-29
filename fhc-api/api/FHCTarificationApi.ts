@@ -1,6 +1,10 @@
 import { XHR } from './XHR';
 import { TarificationConsultationResultDto } from '@medispring/icure-api';
+import { FormattingUtil as Formatter } from '@medispring/util';
 import * as _ from 'lodash';
+
+const FormattingUtil = new Formatter();
+
 
 export class FHCTarificationApi {
   host: string;
@@ -16,6 +20,22 @@ export class FHCTarificationApi {
     else throw Error('api-error' + e.status);
   }
 
+  /**
+   * A GET call to retrieve data from the eTar(ification) service
+   * @param {string} ssin
+   * @param {string} tokenId
+   * @param {string} keystoreId
+   * @param {string} passPhrase
+   * @param {string} hcpFirstName
+   * @param {string} hcpLastName
+   * @param {string} hcpNihii
+   * @param {string} hcpSsin
+   * @param {Array<string>} codes
+   * @param {number} date
+   * @param {string} gmdNihii
+   * @param {string} justification
+   * @returns {Promise<TarificationConsultationResultDto>}
+   */
   consultTarification(ssin: string,
                       tokenId: string,
                       keystoreId: string,
@@ -30,8 +50,8 @@ export class FHCTarificationApi {
                       justification?: string,
                       ): Promise<TarificationConsultationResultDto> {
     const url = this.host + '/tarif/' + ssin;
-    const params = { tokenId, keystoreId, passPhrase, hcpFirstName, hcpLastName, hcpNihii, hcpSsin, date, gmdNihii, justification };
-    const urlParams = _.filter(_.map(params, (value, key) => value ? key + '=' + value: undefined)).join('&');
+    const params = { tokenId, keystoreId, passPhrase, hcpFirstName, hcpLastName, hcpNihii, hcpSsin, date: date ? date.toString() : undefined, gmdNihii, justification };
+    const urlParams = FormattingUtil.toUrlParams(params);
     const codeData = '["' + codes.join('","') + '"]';
     const headers = [new XHR.Header('Content-Type', 'application/json')];
     return XHR.sendCommand('POST', url + '?' + urlParams, headers, codeData)
