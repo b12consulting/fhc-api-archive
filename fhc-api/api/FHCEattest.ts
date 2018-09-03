@@ -1,75 +1,9 @@
 import { XHR } from './XHR';
 import { FormattingUtil as Formatter } from '@medispring/util';
+import { Eattest } from '../models/eattest';
+import { SendAttestResultWithResponse } from '../models/sendAttestResultWithResponse';
 
 const FormattingUtil = new Formatter();
-
-export interface EattestCardReading {
-  date?: number;
-  inputType: number;
-  manualInputReason?: number;
-  mediaType: number;
-  serial?: string;
-  time?: number;
-}
-
-export interface EattestHcParty {
-  cdHcParty?: string;
-  firstName?: string;
-  lastName?: string;
-  idHcParty?: string;
-  idSsin?: string;
-}
-
-export interface EattestRequestor {
-  date?: number;
-  hcp?: EattestHcParty;
-}
-
-export interface EattestCode {
-  cardReading?: EattestCardReading;
-  date?: number;
-  doctorSupplement?: number;
-  fee: number;
-  gmdManager?: EattestHcParty;
-  internship?: EattestHcParty;
-  location?: EattestHcParty;
-  norm?: number;
-  quantity?: number;
-  reglementarySupplement?: number;
-  reimbursement: number;
-  relativeService?: string;
-  requestor?: EattestRequestor;
-  riziv: string;
-}
-
-export interface Eattest {
-  codes: Array<EattestCode>;
-}
-
-export interface MycarenetError {
-  path: string;
-  regex: string;
-  locFr: string;
-  msgFr: string;
-  code: string;
-  uid: string;
-  value: string;
-  locNl : string;
-  msgNl: string;
-}
-
-export interface EattestAcknowledgeType {
-  errors: Array<MycarenetError>;
-}
-
-export interface EattestResult {
-  acknowledge: EattestAcknowledgeType;
-  attest: Eattest;
-  invoicingNumber: string;
-  kmehrMessage: string;
-  xades: string;
-}
-
 
 export class FHCEattest {
   host: string;
@@ -97,14 +31,14 @@ export class FHCEattest {
     hcpCbe: string,
     attest: Eattest,
     date?: number,
-  ): Promise<EattestResult> {
+  ): Promise<SendAttestResultWithResponse> {
     const url = this.host + '/eattest/send/' + patientSsin + '/verbose';
     const params = { keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpFirstName, hcpLastName, hcpCbe, date: date ? date.toString() : undefined };
     const urlParams = FormattingUtil.toUrlParams(params);
     const headers = [new XHR.Header('Content-Type', 'application/json')];
     return XHR.sendCommand('POST', url + '?' + urlParams, headers, JSON.stringify(attest))
       .then((res) => {
-        return res.body as EattestResult;
+        return res.body as SendAttestResultWithResponse;
       })
       .catch(err => {
         this.handleError(err);

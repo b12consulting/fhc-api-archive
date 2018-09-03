@@ -1,10 +1,9 @@
 import { XHR } from './XHR';
 import { TarificationConsultationResultDto } from '@medispring/icure-api';
 import { FormattingUtil as Formatter } from '@medispring/util';
-import * as _ from 'lodash';
+import { TarificationConsultationResult } from '@medispring/fhc-api/src/lib/fhc-api/models/tarificationConsultationResult';
 
 const FormattingUtil = new Formatter();
-
 
 export class FHCTarificationApi {
   host: string;
@@ -48,7 +47,7 @@ export class FHCTarificationApi {
                       date?: number,
                       gmdNihii?: string,
                       justification?: string,
-                      ): Promise<TarificationConsultationResultDto> {
+                      ): Promise<TarificationConsultationResult> {
     const url = this.host + '/tarif/' + ssin;
     const params = { tokenId, keystoreId, passPhrase, hcpFirstName, hcpLastName, hcpNihii, hcpSsin, date: date ? date.toString() : undefined, gmdNihii, justification };
     const urlParams = FormattingUtil.toUrlParams(params);
@@ -56,7 +55,7 @@ export class FHCTarificationApi {
     const headers = [new XHR.Header('Content-Type', 'application/json')];
     return XHR.sendCommand('POST', url + '?' + urlParams, headers, codeData)
       .then((res) => {
-        return res.body as TarificationConsultationResultDto;
+        return res.body as TarificationConsultationResult;
       })
       .catch(err => {
         this.handleError(err);

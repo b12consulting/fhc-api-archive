@@ -1,4 +1,5 @@
 import { XHR } from './XHR';
+import { FormattingUtil } from '@medispring/util';
 
 export class FHCDmgApi {
   host: string;
@@ -28,23 +29,14 @@ export class FHCDmgApi {
     regNrWithMut?,
     requestDate?
   ) {
+    const params = { keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpFirstName, hcpLastName, patientSsin, patientGender, oa, regNrWithMut, requestDate};
+    const urlParams = new FormattingUtil().toUrlParams(params);
     const _url =
       this.host +
       '/gmd' +
       '?ts=' +
       new Date().getTime() +
-      (keystoreId ? '&keystoreId=' + keystoreId : '') +
-      (tokenId ? '&tokenId=' + tokenId : '') +
-      (passPhrase ? '&passPhrase=' + passPhrase : '') +
-      (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
-      (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
-      (hcpFirstName ? '&hcpFirstName=' + hcpFirstName : '') +
-      (hcpLastName ? '&hcpLastName=' + hcpLastName : '') +
-      (patientSsin ? '&patientSsin=' + patientSsin : '') +
-      (patientGender ? '&patientGender=' + patientGender : '') +
-      (oa ? '&oa=' + oa : '') +
-      (regNrWithMut ? '&regNrWithMut=' + regNrWithMut : '') +
-      (requestDate ? '&requestDate=' + requestDate : '');
+        urlParams;
     return XHR.sendCommand('GET', _url, this.headers).catch(err => this.handleError(err));
   }
 
@@ -65,26 +57,14 @@ export class FHCDmgApi {
     patientGender?,
     requestDate?
   ) {
+    const params = { keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpFirstName, hcpLastName, nomenclature, patientSsin, oa, regNrWithMut, patientFirstName, patientLastName, patientGender, requestDate};
+    const urlParams = new FormattingUtil().toUrlParams(params);
     const _url =
       this.host +
       `/gmd/notify/${nomenclature}` +
       '?ts=' +
       new Date().getTime() +
-      (keystoreId ? '&keystoreId=' + keystoreId : '') +
-      (tokenId ? '&tokenId=' + tokenId : '') +
-      (passPhrase ? '&passPhrase=' + passPhrase : '') +
-      (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
-      (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
-      (hcpFirstName ? '&hcpFirstName=' + hcpFirstName : '') +
-      (hcpLastName ? '&hcpLastName=' + hcpLastName : '') +
-      (patientSsin ? '&patientSsin=' + patientSsin : '') +
-      (oa ? '&oa=' + oa : '') +
-      (regNrWithMut ? '&regNrWithMut=' + regNrWithMut : '') +
-      (nomenclature ? '&nomenclature=' + nomenclature : '') +
-      (patientFirstName ? '&patientFirstName=' + patientFirstName : '') +
-      (patientLastName ? '&patientLastName=' + patientLastName : '') +
-      (patientGender ? '&patientGender=' + patientGender : '') +
-      (requestDate ? '&requestDate=' + requestDate : '');
+        urlParams;
     return XHR.sendCommand('POST', _url, this.headers).catch(err => this.handleError(err));
   }
 
@@ -99,20 +79,14 @@ export class FHCDmgApi {
     oa?,
     requestDate?
   ) {
+    const params = { keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpFirstName, hcpLastName, oa, requestDate };
+    const urlParams = new FormattingUtil().toUrlParams(params);
     const _url =
       this.host +
       `/gmd/reqlist` +
       '?ts=' +
       new Date().getTime() +
-      (keystoreId ? '&keystoreId=' + keystoreId : '') +
-      (tokenId ? '&tokenId=' + tokenId : '') +
-      (passPhrase ? '&passPhrase=' + passPhrase : '') +
-      (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
-      (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
-      (hcpFirstName ? '&hcpFirstName=' + hcpFirstName : '') +
-      (hcpLastName ? '&hcpLastName=' + hcpLastName : '') +
-      (oa ? '&oa=' + oa : '') +
-      (requestDate ? '&requestDate=' + requestDate : '');
+        urlParams;
     return XHR.sendCommand('POST', _url, this.headers).catch(err => this.handleError(err));
   }
 
@@ -128,20 +102,14 @@ export class FHCDmgApi {
     bic,
     iban
   ) {
+    const params = { keystoreId, tokenId, passPhrase, hcpNihii,hcpSsin, hcpFirstName, hcpLastName, bic, iban };
+    const urlParams = new FormattingUtil().toUrlParams(params);
     const _url =
       this.host +
       `/gmd/register/${oa}` +
       '?ts=' +
       new Date().getTime() +
-      (keystoreId ? '&keystoreId=' + keystoreId : '') +
-      (tokenId ? '&tokenId=' + tokenId : '') +
-      (passPhrase ? '&passPhrase=' + passPhrase : '') +
-      (hcpNihii ? '&hcpNihii=' + hcpNihii : '') +
-      (hcpSsin ? '&hcpSsin=' + hcpSsin : '') +
-      (hcpFirstName ? '&hcpFirstName=' + hcpFirstName : '') +
-      (hcpLastName ? '&hcpLastName=' + hcpLastName : '') +
-      (bic ? '&bic=' + bic : '') +
-      (iban ? '&iban=' + iban : '');
+      urlParams;
     return XHR.sendCommand('POST', _url, this.headers).catch(err => this.handleError(err));
   }
 }
