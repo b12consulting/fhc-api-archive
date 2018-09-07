@@ -51,6 +51,8 @@ export class FHCHubApi {
     keystoreId,
     tokenId,
     passPhrase,
+    hcpLastName,
+    hcpFirstName,
     hcpNihii,
     hcpSsin,
     hcpZip,
@@ -59,10 +61,11 @@ export class FHCHubApi {
     to?,
     authorNihii?,
     authorSsin?,
+    breakTheGlassReason?,
     isGlobal = false
   ) {
     console.log(arguments);
-    const params = { endpoint, keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpZip, patientSsin, from, to, authorNihii, authorSsin, isGlobal };
+    const params = { endpoint, keystoreId, tokenId, passPhrase, hcpLastName, hcpFirstName, hcpNihii, hcpSsin, hcpZip, patientSsin, from, to, authorNihii, authorSsin, breakTheGlassReason, isGlobal };
     const queryString = _.filter(_.map(params, (value, key) => value ? key + '=' + value: undefined)).join('&');
     const _url = `${this.host}/hub/list/${patientSsin}?ts=${new Date().getTime()}&${queryString}`;
     return XHR.sendCommand('GET', _url, this.headers).catch(err => this.handleError(err));
