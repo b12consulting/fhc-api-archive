@@ -92,15 +92,18 @@ export class FHCHubApi {
     keystoreId,
     tokenId,
     passPhrase,
+    hcpLastName,
+    hcpFirstName,
     hcpNihii,
     hcpSsin,
     hcpZip,
     ssin,
     sv,
     sl,
-    value
+    value,
+    breakTheGlassReason?
   ) {
-    const params = { endpoint, keystoreId, tokenId, passPhrase, hcpNihii, hcpSsin, hcpZip, ssin, sv, sl, value };
+    const params = { endpoint, keystoreId, tokenId, passPhrase, hcpLastName, hcpFirstName, hcpNihii, hcpSsin, hcpZip, ssin, sv, sl, value, breakTheGlassReason };
     const queryString = _.filter(_.map(params, (val, key) => val ? key + '=' + val: undefined)).join('&');
     const _url = `${this.host}/hub/t/${ssin}/${sv}/${sl}/${value}?ts=${new Date().getTime()}&${queryString}`;
     return XHR.sendCommand('GET', _url, this.headers).catch(err => this.handleError(err));
